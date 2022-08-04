@@ -19,7 +19,7 @@ export const DatePicker = ({ label }: IDatePickerProps) => {
         onChange={(newValue: any) => {
           setValue(newValue);
         }}
-        renderInput={(params: any) => <TextField size="small" margin='dense' {...params} />}
+        renderInput={(params: any) => <TextField size="small" margin='dense' fullWidth {...params} />}
       />
     </LocalizationProvider>
   );

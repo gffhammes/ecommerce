@@ -21,8 +21,18 @@ export const FilterAndSorting = (props: IFilterAndSortingProps) => {
       </Box>
       <Box sx={{ mt: 4 }}>        
         <Typography fontWeight={500}>Ordenar</Typography>
-        <Autocomplete label='Preço' />
-        <Autocomplete label='Data de inclusão' />
+        <Autocomplete
+          label='Preço'
+          value=''
+          onChange={(e) => {}}
+          options={['Menor preço', 'Maior preço']}
+        />
+        <Autocomplete
+          label='Data de inclusão'
+          value=''
+          onChange={(e) => {}}
+          options={['Mais antigo', 'Mais recente']}
+        />
       </Box>
     </Box>
   )
