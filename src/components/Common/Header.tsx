@@ -1,18 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Badge } from '@mui/material';
+import { CartContext } from '../../Contexts/Cart/CartContext';
 
 interface IHeaderProps {
   handleOpenCart: () => void;
 }
 
 export const Header = ({ handleOpenCart }: IHeaderProps) => {
+  const context = useContext(CartContext);
+
   return (
     <AppBar position="static">
       <Toolbar>
@@ -20,7 +21,7 @@ export const Header = ({ handleOpenCart }: IHeaderProps) => {
           Fake Shop
         </Typography>
         <IconButton color='inherit' onClick={handleOpenCart}>
-          <Badge badgeContent={4} color="secondary">
+          <Badge badgeContent={context.cart.length} color="secondary">
             <ShoppingCartIcon />
           </Badge>
         </IconButton>

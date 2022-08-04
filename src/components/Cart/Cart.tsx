@@ -1,5 +1,7 @@
-import { SwipeableDrawer } from '@mui/material'
+import { Box, Button, SwipeableDrawer, Typography } from '@mui/material'
 import React from 'react'
+import { CartProductsList } from './CartProductsList';
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 
 interface ICartProps {
   open: boolean;
@@ -15,7 +17,13 @@ export const Cart = ({ open, onClose, onOpen }: ICartProps) => {
       onClose={onClose}
       onOpen={onOpen}
     >
-      {"testttt"}
+      <Box sx={{ height: '100%', p: 5, width: '400px',display: 'flex', flexDirection: 'column' }}>
+        <Typography color='primary.main' fontSize={12} fontWeight={600}>CARRINHO</Typography>
+
+        <CartProductsList />
+
+        <Button variant='contained' sx={{ mt: 'auto' }} endIcon={<ArrowRightAltIcon />} >Finalizar</Button>
+      </Box>
     </SwipeableDrawer>
   )
 }
