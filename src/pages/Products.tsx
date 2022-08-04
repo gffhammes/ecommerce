@@ -14,10 +14,10 @@ const Products = (props: Props) => {
 
   return (
     <Container>
-      <Stack direction='row' sx={{ width: '100%' }}>        
+      <Stack direction='row' sx={{ width: '100%' }} spacing={4}>        
         <FilterAndSorting />
         <Stack  sx={{ flexBasis: 'max-content', flexGrow: 1 }}>
-          <SearchBar />          
+          {/* <SearchBar />           */}
           <ProductsList products={data} loading={isFetching} />
         </Stack>
       </Stack>

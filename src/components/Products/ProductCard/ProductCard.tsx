@@ -22,7 +22,7 @@ const sxImage = {
 
 export const ProductCard = ({ product }: IProductCardProps) => {
   return (
-    <Paper sx={{ height: '100%' }}>
+    <Paper sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       <Box sx={sxImageWrapper}>        
         <Box
           component='img'
