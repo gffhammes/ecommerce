@@ -1,30 +1,35 @@
 import { Box, SelectChangeEvent, Typography } from '@mui/material'
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useEffect, useMemo, useState } from 'react'
+import { CreationDateSorting, PriceSorting } from '../interfaces/FilterAndSorting';
 import { Autocomplete } from './Autocomplete'
 import { DatePicker } from './DatePicker'
 import { TextField } from './TextField';
 
-interface IFilterAndSortingProps {}
-
-enum PriceSorting {
-  NO_SORTING = "",
-  MORE_EXPENSIVE = "Maior preço",
-  CHEAPER = "Menor preço",
+interface IFilterAndSortingProps {
+  handleFilter: (filters: any) => void;
 }
 
-enum CreationDateSorting {
-  NO_SORTING = "",
-  OLDER = "Mais antigo",
-  NEWER = "Mais recente",
-}
 
-export const FilterAndSorting = (props: IFilterAndSortingProps) => {
+export const FilterAndSorting = ({ handleFilter }: IFilterAndSortingProps) => {
   const [minPrice, setMinPrice] = useState<string>("");
   const [maxPrice, setMaxPrice] = useState<string>("");  
   const [minCreationDate, setMinCreationDate] = useState<Date | null>(null);
   const [maxCreationDate, setMaxCreationDate] = useState<Date | null>(null);  
   const [priceSorting, setPriceSorting] = useState<PriceSorting>(PriceSorting.NO_SORTING);
   const [creationDateSorting, setCreationDateSorting] = useState<CreationDateSorting>(CreationDateSorting.NO_SORTING);
+
+  useEffect(() => {
+    const filter = {
+      minPrice,
+      maxPrice,
+      minCreationDate,
+      maxCreationDate,
+      priceSorting,
+      creationDateSorting,
+    }
+
+    handleFilter(filter);
+  }, [minPrice, maxPrice, minCreationDate, maxCreationDate, priceSorting, creationDateSorting, handleFilter])
 
   const handleMinPriceChange = (e: ChangeEvent<HTMLInputElement>) => {
     setMinPrice(e.target.value);

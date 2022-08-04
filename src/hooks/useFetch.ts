@@ -2,7 +2,7 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 
 const api = axios.create({
-  baseURL: "https://fakestoreapi.com"
+  baseURL: "/api"
 })
 
 export const useFetch = <T = unknown>(url: string) => {

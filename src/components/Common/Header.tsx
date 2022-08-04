@@ -4,8 +4,9 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { Badge } from '@mui/material';
+import { Badge, Stack } from '@mui/material';
 import { CartContext } from '../../Contexts/Cart/CartContext';
+import { Link } from 'react-router-dom';
 
 interface IHeaderProps {
   handleOpenCart: () => void;
@@ -16,15 +17,19 @@ export const Header = ({ handleOpenCart }: IHeaderProps) => {
 
   return (
     <AppBar position="static">
-      <Toolbar>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          Fake Shop
-        </Typography>
-        <IconButton color='inherit' onClick={handleOpenCart}>
-          <Badge badgeContent={context.cart.length} color="secondary">
-            <ShoppingCartIcon />
-          </Badge>
-        </IconButton>
+      <Toolbar sx={{ width: '100%' }}>
+        <Stack direction='row' justifyContent='space-between' alignItems='center' sx={{ width: '100%' }} >          
+          <Link to='/'>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              Fake Shop
+            </Typography>
+          </Link>
+          <IconButton color='inherit' onClick={handleOpenCart}>
+            <Badge badgeContent={context.cart.length} color="secondary">
+              <ShoppingCartIcon />
+            </Badge>
+          </IconButton>
+        </Stack>
       </Toolbar>
     </AppBar>
   );

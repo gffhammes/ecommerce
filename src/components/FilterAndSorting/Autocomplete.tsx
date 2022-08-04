@@ -17,9 +17,6 @@ export const Autocomplete = ({ label, value, options, onChange }: IAutocompleteP
         label={label}
         onChange={onChange}
       >
-        <MenuItem value="">
-          <em>Nenhum</em>
-        </MenuItem>
         {options.map(option => (
           <MenuItem key={option} value={option}>{option}</MenuItem>
         ))}

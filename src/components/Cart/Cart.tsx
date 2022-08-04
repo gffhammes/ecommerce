@@ -2,6 +2,7 @@ import { Box, Button, SwipeableDrawer, Typography } from '@mui/material'
 import React from 'react'
 import { CartProductsList } from './CartProductsList';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
+import { Link } from 'react-router-dom';
 
 interface ICartProps {
   open: boolean;
@@ -22,7 +23,7 @@ export const Cart = ({ open, onClose, onOpen }: ICartProps) => {
 
         <CartProductsList />
 
-        <Button variant='contained' sx={{ mt: 'auto' }} endIcon={<ArrowRightAltIcon />} >Finalizar</Button>
+        <Button component={Link} to='/checkout' onClick={onClose} variant='contained' sx={{ mt: 'auto' }} endIcon={<ArrowRightAltIcon />} >Finalizar</Button>
       </Box>
     </SwipeableDrawer>
   )

@@ -13,7 +13,7 @@ export const ProductsList = ({ products, loading }: IProductsListProps) => {
     return <div>loading...</div>
   }
   
-  if (!products) {
+  if (!products || products.length === 0) {
     return <div>No products to show</div>
   }
 
