@@ -8,7 +8,8 @@ import { useFetch } from '../hooks/useFetch'
 type Props = {}
 
 const Products = (props: Props) => {
-  const { data, isFetching, error } = useFetch("/products/category/electronics")
+  // const { data, isFetching, error } = useFetch("/products/category/electronics");
+  const { data, isFetching, error } = useFetch("/products");
 
   console.log(data)
 
@@ -16,7 +17,7 @@ const Products = (props: Props) => {
     <Container>
       <Stack direction='row' sx={{ width: '100%' }} spacing={4}>        
         <FilterAndSorting />
-        <Stack  sx={{ flexBasis: 'max-content', flexGrow: 1 }}>
+        <Stack component='main' sx={{ flexBasis: 'max-content', flexGrow: 1 }}>
           {/* <SearchBar />           */}
           <ProductsList products={data} loading={isFetching} />
         </Stack>

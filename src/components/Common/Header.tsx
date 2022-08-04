@@ -8,14 +8,18 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Badge } from '@mui/material';
 
-export const Header = () => {
+interface IHeaderProps {
+  handleOpenCart: () => void;
+}
+
+export const Header = ({ handleOpenCart }: IHeaderProps) => {
   return (
     <AppBar position="static">
       <Toolbar>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           Fake Shop
         </Typography>
-        <IconButton color='inherit'>
+        <IconButton color='inherit' onClick={handleOpenCart}>
           <Badge badgeContent={4} color="secondary">
             <ShoppingCartIcon />
           </Badge>

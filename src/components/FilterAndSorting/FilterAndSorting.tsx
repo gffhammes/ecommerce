@@ -1,37 +1,99 @@
-import { Box, TextField, Typography } from '@mui/material'
-import React from 'react'
+import { Box, SelectChangeEvent, Typography } from '@mui/material'
+import React, { ChangeEvent, useState } from 'react'
 import { Autocomplete } from './Autocomplete'
 import { DatePicker } from './DatePicker'
+import { TextField } from './TextField';
 
 interface IFilterAndSortingProps {}
 
+enum PriceSorting {
+  NO_SORTING = "",
+  MORE_EXPENSIVE = "Maior preço",
+  CHEAPER = "Menor preço",
+}
+
+enum CreationDateSorting {
+  NO_SORTING = "",
+  OLDER = "Mais antigo",
+  NEWER = "Mais recente",
+}
+
 export const FilterAndSorting = (props: IFilterAndSortingProps) => {
+  const [minPrice, setMinPrice] = useState<string>("");
+  const [maxPrice, setMaxPrice] = useState<string>("");  
+  const [minCreationDate, setMinCreationDate] = useState<Date | null>(null);
+  const [maxCreationDate, setMaxCreationDate] = useState<Date | null>(null);  
+  const [priceSorting, setPriceSorting] = useState<PriceSorting>(PriceSorting.NO_SORTING);
+  const [creationDateSorting, setCreationDateSorting] = useState<CreationDateSorting>(CreationDateSorting.NO_SORTING);
+
+  const handleMinPriceChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setMinPrice(e.target.value);
+  }
+  
+  const handleMaxPriceChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setMaxPrice(e.target.value);
+  }
+  
+  const handleMinCreationDateChange = (newValue: Date | null) => {
+    setMinCreationDate(newValue);
+  }
+  
+  const handleMaxCreationDateChange = (newValue: Date | null) => {
+    setMaxCreationDate(newValue);
+  }
+  
+  const handlePriceSortingChange = (e: SelectChangeEvent<string>) => {
+    setPriceSorting((e.target.value as PriceSorting));
+  }
+  
+  const handleCreationDateSortingChange = (e: SelectChangeEvent<string>) => {
+    setCreationDateSorting((e.target.value as CreationDateSorting));
+  }
+
   return (
-    <Box sx={{ height: '50rem', flex: '15rem', flexShrink: 0, flexGrow: 0, position: 'sticky', top: 0, pt: 4 }}>
+    <Box component='aside' sx={{ height: '50rem', flex: '15rem', flexShrink: 0, flexGrow: 0, position: 'sticky', top: 0, pt: 4 }}>
       <Typography fontSize={12} sx={{ color: '#adadad' }}>FILTRAR</Typography>
       <Box sx={{ mt: 4 }}>        
         <Typography fontWeight={500}>Preço</Typography>
-        <TextField fullWidth label='Mínimo' margin='dense' size="small"/>
-        <TextField fullWidth label='Máximo' margin='dense' size="small"/>
+        <TextField
+          label='Mínimo'
+          id="min"
+          value={minPrice}
+          onChange={handleMinPriceChange}
+        />
+        <TextField
+          label='Máximo'
+          id="max"
+          value={maxPrice}
+          onChange={handleMaxPriceChange}
+        />
       </Box>
       <Box sx={{ mt: 4 }}>        
         <Typography fontWeight={500}>Data de inclusão</Typography>
-        <DatePicker label='De' />
-        <DatePicker label='Até' />
+        <DatePicker
+          label='De'
+          value={minCreationDate}
+          onChange={handleMinCreationDateChange}        
+        />
+        <DatePicker
+          label='Até'
+          value={maxCreationDate}
+          onChange={handleMaxCreationDateChange}
+        />
       </Box>
       <Box sx={{ mt: 4 }}>        
         <Typography fontWeight={500}>Ordenar</Typography>
         <Autocomplete
           label='Preço'
-          value=''
-          onChange={(e) => {}}
-          options={['Menor preço', 'Maior preço']}
+          value={priceSorting}
+          onChange={handlePriceSortingChange}
+          options={Object.values(PriceSorting)}
         />
         <Autocomplete
           label='Data de inclusão'
-          value=''
-          onChange={(e) => {}}
-          options={['Mais antigo', 'Mais recente']}
+          value={creationDateSorting}
+          onChange={handleCreationDateSortingChange}
+          options={Object.values(CreationDateSorting)}
         />
       </Box>
     </Box>

@@ -15,7 +15,7 @@ export const Autocomplete = ({ label, value, options, onChange }: IAutocompleteP
       <Select
         value={value}
         label={label}
-        onChange={onChange}        
+        onChange={onChange}
       >
         <MenuItem value="">
           <em>Nenhum</em>
