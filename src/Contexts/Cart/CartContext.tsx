@@ -1,14 +1,16 @@
 import { createContext, ReactNode, useState } from "react";
+import { IProduct } from "../../interfaces/Product";
 
 interface ICartItem {
-  id: string;
+  product: IProduct;
   quantity: number;
 }
 
 interface ICartContext {
    cart: ICartItem[];
-   addProductToCart: (productId: string) => void;
-   removeProductFromCart: (productId: string) => void;
+   totalPrice: number;
+   addProductToCart: (product: IProduct) => void;
+   removeProductFromCart: (productId: number) => void;
 }
 
 interface ICartContextProviderProps {
@@ -17,6 +19,7 @@ interface ICartContextProviderProps {
 
 export const defaultCartContext = {
   cart: [],
+  totalPrice: 0,
   addProductToCart: () => {},
   removeProductFromCart: () => {},
 }
@@ -25,17 +28,19 @@ export const CartContext = createContext<ICartContext>(defaultCartContext);
 
 export const CartContextProvider = ({ children }: ICartContextProviderProps) => {
   const [cart, setCart] = useState<ICartItem[]>([]);
+
+  const totalPrice = cart.reduce((sum, cartItem) => sum + (cartItem.product.price * cartItem.quantity), 0);
   
-  const addProductToCart = (productId: string) => {
+  const addProductToCart = (product: IProduct) => {
     const newCart = [...cart];
   
-    const existingItem = newCart.find(cartItem => cartItem.id === productId);
+    const existingItem = newCart.find(cartItem => cartItem.product.id === product.id);
     
     if (existingItem) {
-        existingItem.quantity += existingItem.quantity 
+        existingItem.quantity += 1;
     } else {
       newCart.push({
-        id: productId,
+        product,
         quantity: 1,
       });
     }
@@ -43,16 +48,17 @@ export const CartContextProvider = ({ children }: ICartContextProviderProps) => 
     setCart(newCart);
   }
 
-  const removeProductFromCart = (productId: string) => {
-    const newCart = cart.filter((item) => item.id !== productId);
+  const removeProductFromCart = (productId: number) => {
+    const newCart = cart.filter((item) => item.product.id !== productId);
 
     setCart(newCart);
   }
 
   const contextValue = {
     cart,
+    totalPrice,
     addProductToCart,
-    removeProductFromCart
+    removeProductFromCart,
   };
 
   return <CartContext.Provider value={contextValue}>{children}</CartContext.Provider>;

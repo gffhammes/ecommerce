@@ -1,6 +1,6 @@
 import { Box, SelectChangeEvent, Typography } from '@mui/material'
 import React, { ChangeEvent, useEffect, useMemo, useState } from 'react'
-import { CreationDateSorting, PriceSorting } from '../interfaces/FilterAndSorting';
+import { CreationDateSorting, PriceSorting } from '../../interfaces/FilterAndSorting';
 import { Autocomplete } from './Autocomplete'
 import { DatePicker } from './DatePicker'
 import { TextField } from './TextField';

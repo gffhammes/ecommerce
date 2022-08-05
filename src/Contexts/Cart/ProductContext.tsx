@@ -1,4 +1,5 @@
 import { createContext, ReactNode } from "react";
+import { IProduct } from "../../interfaces/Product";
 import { useFetch } from "../../hooks/useFetch";
 
 interface IProductsContextProviderProps {
@@ -6,28 +7,28 @@ interface IProductsContextProviderProps {
 }
 
 interface IProductsContext {
-  products: any | null;
+  products: IProduct[] | null;
   isFetching: boolean;
   error: Error | null;
-  getProductById: (id: string) => any;
+  getProductById: (id: number) => IProduct | null;
 }
-
 
 export const defaultProductsContext = {
   products: null,
   isFetching: true,
   error: null,
-  getProductById: () => {},
+  getProductById: () => null,
 }
 
 export const ProductsContext = createContext<IProductsContext>(defaultProductsContext);
 
 export const ProductsContextProvider = ({ children }: IProductsContextProviderProps) => {
-  const { data, isFetching, error } = useFetch("/products");
+  const { data, isFetching, error } = useFetch<IProduct[]>("/products");
 
   
-  const getProductById = (id: string) => {
-    return (data as any[]).find((product: any) => product.id === id)
+  const getProductById = (id: number) => {
+    if (!data) return null;
+    return data.find((product: any) => product.id === id) ?? null;
   }
   
   const contextValue = {

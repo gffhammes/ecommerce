@@ -1,5 +1,5 @@
 import { Box, Button, Paper,  Stack, Typography } from '@mui/material'
-import React, { createContext, useContext } from 'react'
+import React, { createContext, useCallback, useContext } from 'react'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { Rating } from './Rating';
 import { CartContext } from '../../../Contexts/Cart/CartContext';
@@ -24,6 +24,10 @@ const sxImage = {
 export const ProductCard = ({ product }: IProductCardProps) => {
   const context = useContext(CartContext);
 
+  const handleAddToCartClick = useCallback(() => {
+    context.addProductToCart(product);
+  }, [context, product])
+
   return (
     <Paper sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       <Box sx={sxImageWrapper}>        
@@ -41,7 +45,7 @@ export const ProductCard = ({ product }: IProductCardProps) => {
           <Typography>{product.title}</Typography>
           <Rating rating={product.rating} />
         </Stack>
-        <Button onClick={() => context.addProductToCart(product.id)} fullWidth variant='contained' startIcon={<AddShoppingCartIcon/>} sx={{ mt: 'auto!important' }}>COMPRAR</Button>
+        <Button onClick={handleAddToCartClick} fullWidth variant='contained' startIcon={<AddShoppingCartIcon/>} sx={{ mt: 'auto!important' }}>COMPRAR</Button>
       </Box>
     </Paper>
   )
