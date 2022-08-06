@@ -4,7 +4,7 @@ import { Box, Stack } from '@mui/material';
 import { RoutesComponent } from './Routes';
 import { Cart } from './components/Cart/Cart';
 import { CartContextProvider } from './Contexts/Cart/CartContext';
-import { createFakeServer } from './services/createFakeServer';
+import { createFakeServer } from './helpers/createFakeServer';
 import { ProductsContextProvider } from './Contexts/Cart/ProductContext';
 
 createFakeServer();

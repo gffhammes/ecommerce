@@ -1,21 +1,21 @@
 import { Box, Grid, Stack, Typography } from '@mui/material';
-import React from 'react'
+import React, { useContext } from 'react'
+import { ProductsContext } from '../../Contexts/Cart/ProductContext';
 import { ProductCard } from './ProductCard/ProductCard';
 
 interface IProductsListProps {
-  products: any | null;
-  loading: boolean;
 }
 
-export const ProductsList = ({ products, loading }: IProductsListProps) => {
+export const ProductsList = (props: IProductsListProps) => {
+  const productsContext = useContext(ProductsContext);
 
-  if (loading) {
+  if (productsContext.isFetching) {
     return <div>loading...</div>
   }
   
-  if (!products || products.length === 0) {
+  if (!productsContext.filteredProducts || productsContext.filteredProducts.length === 0) {
     return (
-      <Stack alignItems='center' spacing={4}>        
+      <Stack alignItems='center'>        
         <Box
           sx={{
             height: '30rem',
@@ -33,15 +33,15 @@ export const ProductsList = ({ products, loading }: IProductsListProps) => {
             }}
           />
         </Box>
-        <Typography textAlign='center' color='primary.main' fontSize={32}>Nenhum produto encontrado</Typography>
-        <Typography textAlign='center' >Se aplicou algum filtro, tente alterar os valores</Typography>
+        <Typography lineHeight={1} textAlign='center' color='primary.main' fontSize={32} sx={{ mt: 4, mb: 1.5 }}>Nenhum produto encontrado</Typography>
+        <Typography lineHeight={1} textAlign='center'>Se aplicou algum filtro, tente alterar os valores</Typography>
       </Stack>
     )
   }
 
   return (
     <Grid container spacing={2}>
-      {products.map((product: any) => (
+      {productsContext.filteredProducts.map(product => (
         <Grid key={product.id} item xs={6} lg={4}>          
           <ProductCard product={product} />
         </Grid>

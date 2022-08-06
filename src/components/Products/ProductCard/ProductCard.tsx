@@ -3,9 +3,10 @@ import React, { createContext, useCallback, useContext } from 'react'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { Rating } from './Rating';
 import { CartContext } from '../../../Contexts/Cart/CartContext';
+import { IProduct } from '../../../interfaces/Product';
 
 interface IProductCardProps {
-  product: any;
+  product: IProduct;
 }
 
 const sxImageWrapper = {

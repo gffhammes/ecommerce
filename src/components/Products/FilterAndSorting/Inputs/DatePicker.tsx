@@ -1,5 +1,5 @@
 import React from 'react';
-import TextField from '@mui/material/TextField';
+import TextField, { TextFieldProps } from '@mui/material/TextField';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker as MuiDatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -17,7 +17,7 @@ export const DatePicker = ({ label, value, onChange }: IDatePickerProps) => {
         label={label}
         value={value}
         onChange={onChange}
-        renderInput={(params: any) => <TextField size="small" margin='dense' fullWidth {...params} />}
+        renderInput={(params: TextFieldProps) => <TextField size="small" margin='dense' fullWidth {...params} />}
       />
     </LocalizationProvider>
   );
