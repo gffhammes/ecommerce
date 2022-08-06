@@ -1,7 +1,7 @@
 import { Avatar, Box, Divider, IconButton, List, ListItem, ListItemAvatar, Stack, Typography } from '@mui/material'
 import React, { useContext } from 'react'
 import { CartContext } from '../../Contexts/Cart/CartContext';
-import { ProductsContext } from '../../Contexts/Cart/ProductContext';
+import { ProductsContext } from '../../Contexts/Products/ProductsContext';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { EmptyCartCard } from './EmptyCartCard';
 import { CartProductCard } from './CartProductCard';

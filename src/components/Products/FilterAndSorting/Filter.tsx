@@ -1,20 +1,15 @@
 import { Box, Button, SelectChangeEvent, Typography } from '@mui/material'
 import React, { ChangeEvent, SyntheticEvent, useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { ProductsContext } from '../../../Contexts/Cart/ProductContext';
+import { ProductsContext } from '../../../Contexts/Products/ProductsContext';
 import { IFilter } from '../../../interfaces/Filter';
 import { DatePicker } from './Inputs/DatePicker';
 import { TextField } from './Inputs/TextField';
 
-interface IFilterAndSortingProps {
-}
-
-export const FilterAndSorting = (props: IFilterAndSortingProps) => {
+export const Filter = () => {
   const [minPrice, setMinPrice] = useState<string>("");
   const [maxPrice, setMaxPrice] = useState<string>("");  
   const [minCreationDate, setMinCreationDate] = useState<Date | null>(null);
   const [maxCreationDate, setMaxCreationDate] = useState<Date | null>(null);  
-  // const [priceSorting, setPriceSorting] = useState<PriceSorting>(PriceSorting.NO_SORTING);
-  // const [creationDateSorting, setCreationDateSorting] = useState<CreationDateSorting>(CreationDateSorting.NO_SORTING);
   const productsContext = useContext(ProductsContext);
 
   const handleFilterSubmit = (e: SyntheticEvent) => {
@@ -45,18 +40,9 @@ export const FilterAndSorting = (props: IFilterAndSortingProps) => {
   const handleMaxCreationDateChange = (newValue: Date | null) => {
     setMaxCreationDate(newValue);
   }
-  
-  // const handlePriceSortingChange = (e: SelectChangeEvent<string>) => {
-  //   setPriceSorting((e.target.value as PriceSorting));
-  // }
-  
-  // const handleCreationDateSortingChange = (e: SelectChangeEvent<string>) => {
-  //   setCreationDateSorting((e.target.value as CreationDateSorting));
-  // }
-
  
   return (
-    <Box component='aside' sx={{ height: '50rem', flex: '15rem', flexShrink: 0, flexGrow: 0, position: 'sticky', top: 0, pt: 4 }}>
+    <Box component='aside' sx={{ height: '50rem', flex: '15rem', flexShrink: 0, flexGrow: 0, pt: 4 }}>
       <Typography fontSize={12} sx={{ color: '#adadad' }}>FILTRAR</Typography>
       <Box component='form' noValidate onSubmit={handleFilterSubmit}>
          <Box sx={{ mt: 4 }}>        
@@ -87,21 +73,6 @@ export const FilterAndSorting = (props: IFilterAndSortingProps) => {
             onChange={handleMaxCreationDateChange}
           />
         </Box>
-        {/* <Box sx={{ mt: 4 }}>        
-          <Typography fontWeight={500}>Ordenar</Typography>
-          <Autocomplete
-            label='Preço'
-            value={priceSorting}
-            onChange={handlePriceSortingChange}
-            options={Object.values(PriceSorting)}
-          />
-          <Autocomplete
-            label='Data de inclusão'
-            value={creationDateSorting}
-            onChange={handleCreationDateSortingChange}
-            options={Object.values(CreationDateSorting)}
-          />
-        </Box> */}
         <Box sx={{ mt: 4 }}>
           <Button fullWidth variant='outlined' type='submit' >Filtrar</Button>
         </Box>

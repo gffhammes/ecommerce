@@ -1,6 +1,6 @@
 import { Box, Grid, Stack, Typography } from '@mui/material';
 import React, { useContext } from 'react'
-import { ProductsContext } from '../../Contexts/Cart/ProductContext';
+import { ProductsContext } from '../../Contexts/Products/ProductsContext';
 import { ProductCard } from './ProductCard/ProductCard';
 
 interface IProductsListProps {
@@ -40,12 +40,14 @@ export const ProductsList = (props: IProductsListProps) => {
   }
 
   return (
-    <Grid container spacing={2}>
-      {productsContext.filteredProducts.map(product => (
-        <Grid key={product.id} item xs={6} lg={4}>          
-          <ProductCard product={product} />
-        </Grid>
-      ))}
-    </Grid>
+    <Box>      
+      <Grid container spacing={2}>
+        {productsContext.filteredProducts.map(product => (
+          <Grid key={product.id} item xs={6} lg={4}>          
+            <ProductCard product={product} />
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
   )
 }
