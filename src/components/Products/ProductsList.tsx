@@ -43,7 +43,7 @@ export const ProductsList = (props: IProductsListProps) => {
     <Box>      
       <Grid container spacing={2}>
         {productsContext.filteredProducts.map(product => (
-          <Grid key={product.id} item xs={6} lg={4}>          
+          <Grid key={product.id} item xs={12} sm={6} lg={4}>          
             <ProductCard product={product} />
           </Grid>
         ))}

@@ -2,6 +2,7 @@ import { createContext, ReactNode, useCallback, useEffect, useState } from "reac
 import { IProduct } from "../../interfaces/Product";
 import { useFetch } from "../../hooks/useFetch";
 import { IFilter } from "../../interfaces/Filter";
+import { Sorting } from "../../interfaces/Sorting";
 
 interface IProductsContextProviderProps {
   children: ReactNode;
@@ -13,6 +14,8 @@ interface IProductsContext {
   error: Error | null;
   filteredProducts: IProduct[] | null;
   handleFilter: (filters: IFilter) => void;
+  handleSorting: (sorting: Sorting) => void;
+  handleSearch: (value: string) => void;
 }
 
 export const defaultProductsContext = {
@@ -21,6 +24,8 @@ export const defaultProductsContext = {
   error: null,
   filteredProducts: null,
   handleFilter: () => {},
+  handleSorting: () => {},
+  handleSearch: () => {},
 }
 
 export const ProductsContext = createContext<IProductsContext>(defaultProductsContext);
@@ -60,19 +65,34 @@ export const ProductsContextProvider = ({ children }: IProductsContextProviderPr
       newProducts = newProducts.filter(product => new Date(product.createdAt) <= maxCreationDate);
     }
 
-    // if (priceSorting === PriceSorting.MORE_EXPENSIVE) {
-    //   newProducts.sort((productA, productB) => productB.price - productA.price);
-    // } else if (priceSorting === PriceSorting.CHEAPER) {
-    //   newProducts.sort((productA, productB) => productA.price - productB.price);
-    // }
-
-    // if (creationDateSorting === CreationDateSorting.OLDER) {
-    //   newProducts.sort((productA, productB) => Number(new Date(productA.createdAt)) - Number(new Date(productB.createdAt)));
-    // } else if (creationDateSorting === CreationDateSorting.NEWER) {
-    //   newProducts.sort((productA, productB) => Number(new Date(productB.createdAt)) - Number(new Date(productA.createdAt)));
-    // }
-
     setFilteredProducts(newProducts);
+  }, [data])
+
+  const handleSorting = useCallback((sorting: Sorting) => {
+    const sortedProducts = filteredProducts ? [...filteredProducts] : [];;
+
+    switch (sorting) {
+      case Sorting.CHEAPER:
+        sortedProducts.sort((productA, productB) => productA.price - productB.price);
+        break;
+      case Sorting.MORE_EXPENSIVE:
+        sortedProducts.sort((productA, productB) => productB.price - productA.price);
+        break;
+      case Sorting.OLDER:
+        sortedProducts.sort((productA, productB) => Number(new Date(productA.createdAt)) - Number(new Date(productB.createdAt)));
+        break;
+      case Sorting.NEWER:
+        sortedProducts.sort((productA, productB) => Number(new Date(productB.createdAt)) - Number(new Date(productA.createdAt)));
+        break;
+      default: 
+    }
+    
+    setFilteredProducts(sortedProducts);
+  }, [filteredProducts])
+
+  const handleSearch = useCallback((value: string) => {
+    const searchProducts = data ? data.filter(product => product.title.toLowerCase().includes(value.toLowerCase())) : [];
+    setFilteredProducts(searchProducts);
   }, [data])
   
   const contextValue = {
@@ -81,6 +101,8 @@ export const ProductsContextProvider = ({ children }: IProductsContextProviderPr
     error,
     filteredProducts,
     handleFilter,
+    handleSorting,
+    handleSearch,
   };
 
   return <ProductsContext.Provider value={contextValue}>{children}</ProductsContext.Provider>;

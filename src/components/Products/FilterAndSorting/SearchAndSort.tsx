@@ -1,13 +1,26 @@
 import { Box, InputAdornment, SelectChangeEvent, Stack } from '@mui/material';
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useContext, useEffect, useState, useTransition } from 'react'
 import { TextField } from './Inputs/TextField'
 import SearchIcon from '@mui/icons-material/Search';
 import { Select } from './Inputs/Select';
 import { Sorting } from '../../../interfaces/Sorting';
+import { ProductsContext } from '../../../Contexts/Products/ProductsContext';
 
 export const SearchAndSort = () => {
   const [search, setSearch] = useState<string>("");
   const [sorting, setSorting] = useState<Sorting>(Sorting.NO_SORTING);
+  const productsContext= useContext(ProductsContext);
+
+  useEffect(() => {
+    productsContext.handleSorting(sorting);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sorting])
+
+  
+  useEffect(() => {
+    productsContext.handleSearch(search);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [search])
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);  
@@ -18,7 +31,7 @@ export const SearchAndSort = () => {
   }
 
   return (
-    <Stack direction='row' spacing={2}>      
+    <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>      
       <Box sx={{ flexGrow: 1 }}>        
         <TextField
           value={search}
@@ -33,7 +46,7 @@ export const SearchAndSort = () => {
           }}
         />
       </Box>
-      <Box sx={{ flexShrink: 1, flexBasis: '12rem' }}>        
+      <Box sx={{ flexShrink: 1, flexBasis: { xs: 'unset', md: '12rem' } }}>        
         <Select
           label='Ordenar'
           value={sorting}
