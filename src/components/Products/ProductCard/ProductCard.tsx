@@ -46,7 +46,7 @@ export const ProductCard = ({ product }: IProductCardProps) => {
           <Typography>{product.title}</Typography>
           <Rating rating={product.rating} />
         </Stack>
-        <Button onClick={handleAddToCartClick} fullWidth variant='contained' startIcon={<AddShoppingCartIcon/>} sx={{ mt: 'auto!important' }}>COMPRAR</Button>
+        <Button onClick={handleAddToCartClick} fullWidth variant='outlined' startIcon={<AddShoppingCartIcon/>} sx={{ mt: 'auto!important' }}>COMPRAR</Button>
       </Box>
     </Paper>
   )
