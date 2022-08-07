@@ -12,18 +12,18 @@ Antes de começar, você vai precisar ter instalado em sua máquina as seguintes
 
 ```bash
 # Clone este repositório
-$ git clone <https://github.com/gffhammes/ecommerce.git>
+git clone https://github.com/gffhammes/ecommerce.git
 
 # Acesse a pasta do projeto no terminal/cmd
-$ cd ecommerce
+cd ecommerce
 
 # Instale as dependências
-$ yarn
+yarn
 
 # Execute a aplicação
-$ yarn start
+yarn start
 
-# O servidor inciará na porta:3000 - acesse <http://localhost:3000>
+# O servidor inciará na porta:3000 - acesse <http://localhost:3000/>
 ```
 
 ### 🛠 Tecnologias
