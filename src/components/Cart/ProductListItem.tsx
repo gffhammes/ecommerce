@@ -4,6 +4,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { getTruncate } from '../../helpers/getTruncate';
 import { CartContext } from '../../Contexts/Cart/CartContext';
 import { ICartItem } from '../../interfaces/Cart';
+import { currencyBRLIntl } from '../../helpers/currencyBRLIntl';
 
 interface IProductListItemProps {
   cartItem: ICartItem;
@@ -24,8 +25,8 @@ export const ProductListItem = ({ cartItem: { product, quantity } }: IProductLis
         <Stack sx={{ width: '100%' }} direction='row' alignItems='center' justifyContent='space-between'>
           <Box>
             <Typography fontWeight={600}>{getTruncate(product.title, 20)}</Typography>
-            <Typography fontSize={14}>R$ {product.price.toFixed(2)} x {quantity}</Typography>
-            <Typography fontSize={14} sx={{ mt: 1, color: '#767676' }} fontWeight={600}>R$ {(product.price * quantity).toFixed(2)}</Typography>
+            <Typography fontSize={14}>{currencyBRLIntl(product.price)} x {quantity}</Typography>
+            <Typography fontSize={14} sx={{ mt: 1, color: '#767676' }} fontWeight={600}>{currencyBRLIntl(product.price * quantity)}</Typography>
           </Box>
           
           <IconButton sx={{ height: 'fit-content' }} onClick={() => removeProductFromCart(product.id)}>

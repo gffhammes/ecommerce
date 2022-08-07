@@ -4,6 +4,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { ICartItem } from '../../interfaces/Cart';
 import { CartContext } from '../../Contexts/Cart/CartContext';
 import { getTruncate } from '../../helpers/getTruncate';
+import { currencyBRLIntl } from '../../helpers/currencyBRLIntl';
 
 interface ICheckoutListItemProps {
   cartItem: ICartItem;
@@ -36,9 +37,9 @@ export const CheckoutListItem = ({ cartItem }: ICheckoutListItemProps) => {
           </Grid>
           <Grid item xs={10} sm={4}>
             <Stack direction={{ xs: 'column', md: 'row' }}>              
-              <Typography sx={{ flex: 1 }}>R$ {cartItem.product.price.toFixed(2)}</Typography>          
+              <Typography sx={{ flex: 1 }}>{currencyBRLIntl(cartItem.product.price)}</Typography>          
               <Typography sx={{ flex: .5 }}>x {cartItem.quantity}</Typography>   
-              <Typography sx={{ flex: 1 }} fontWeight={600}>R$ {(cartItem.quantity * cartItem.product.price).toFixed(2)}</Typography>       
+              <Typography sx={{ flex: 1 }} fontWeight={600}>{currencyBRLIntl(cartItem.quantity * cartItem.product.price)}</Typography>       
             </Stack>
           </Grid>
           <Grid item xs={2} sm={1}>

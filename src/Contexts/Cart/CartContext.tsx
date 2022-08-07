@@ -1,6 +1,8 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { ICartItem } from "../../interfaces/Cart";
 import { IProduct } from "../../interfaces/Product";
+import { useSnackbar } from 'notistack'
+
 
 interface ICartContextProviderProps {
   children: ReactNode;
@@ -17,6 +19,7 @@ interface ICartContext {
    clearCart: () => void;
    handleOpenCart: () => void;
    handleCloseCart: () => void;
+   handleCheckout: () => void;
 }
 
 export const defaultCartContext = {
@@ -30,6 +33,7 @@ export const defaultCartContext = {
   clearCart: () => {},
   handleOpenCart: () => {},
   handleCloseCart: () => {},
+  handleCheckout: () => {},
 }
 
 export const CartContext = createContext<ICartContext>(defaultCartContext);
@@ -37,6 +41,7 @@ export const CartContext = createContext<ICartContext>(defaultCartContext);
 export const CartContextProvider = ({ children }: ICartContextProviderProps) => {
   const [cart, setCart] = useState<ICartItem[]>([]);
   const [open, setOpen] = useState<boolean>(false);
+  const { enqueueSnackbar } = useSnackbar()
   
   const localCart = localStorage.getItem("cart");
 
@@ -70,6 +75,8 @@ export const CartContextProvider = ({ children }: ICartContextProviderProps) => 
     
     let stringCart = JSON.stringify(newCart);
     localStorage.setItem("cart", stringCart);
+
+    enqueueSnackbar('Produto adicionado ao carrinho!');
   }
 
   const removeProductFromCart = (productId: number) => {
@@ -85,6 +92,12 @@ export const CartContextProvider = ({ children }: ICartContextProviderProps) => 
     setCart([]);
 
     localStorage.setItem('cart', "[]");
+  }
+
+  const handleCheckout = () => {
+    clearCart();
+
+    enqueueSnackbar('Compra feita com sucesso!', { variant: 'success' });
   }
 
   const totalPrice = cart.reduce((sum, cartItem) => sum + (cartItem.product.price * cartItem.quantity), 0);
@@ -104,6 +117,7 @@ export const CartContextProvider = ({ children }: ICartContextProviderProps) => 
     clearCart,
     handleOpenCart,
     handleCloseCart,
+    handleCheckout,
   };
 
   return <CartContext.Provider value={contextValue}>{children}</CartContext.Provider>;

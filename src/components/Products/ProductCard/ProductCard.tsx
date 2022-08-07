@@ -4,6 +4,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { Rating } from './Rating';
 import { CartContext } from '../../../Contexts/Cart/CartContext';
 import { IProduct } from '../../../interfaces/Product';
+import { currencyBRLIntl } from '../../../helpers/currencyBRLIntl';
 
 interface IProductCardProps {
   product: IProduct;
@@ -42,7 +43,7 @@ export const ProductCard = ({ product }: IProductCardProps) => {
 
       <Box sx={{ p: 2, height: '100%', display: 'flex', flexDirection: 'column' }}>        
         <Stack spacing={1} sx={{ mb: '2rem' }}>          
-          <Typography fontSize={32}> R$ {product.price}</Typography>
+          <Typography fontSize={32}>{currencyBRLIntl(product.price)}</Typography>
           <Typography>{product.title}</Typography>
           <Rating rating={product.rating} />
         </Stack>
