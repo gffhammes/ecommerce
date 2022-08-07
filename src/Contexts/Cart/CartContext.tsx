@@ -83,6 +83,8 @@ export const CartContextProvider = ({ children }: ICartContextProviderProps) => 
 
   const clearCart = () => {
     setCart([]);
+
+    localStorage.setItem('cart', "[]")
   }
 
   const totalPrice = cart.reduce((sum, cartItem) => sum + (cartItem.product.price * cartItem.quantity), 0);

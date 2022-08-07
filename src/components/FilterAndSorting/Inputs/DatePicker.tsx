@@ -13,7 +13,7 @@ interface IDatePickerProps {
 
 export const DatePicker = ({ label, value, onChange }: IDatePickerProps) => {
   return (
-    <LocalizationProvider dateAdapter={AdapterDateFns} locale={ptLocale}>
+    <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ptLocale}>
       <MuiDatePicker
         label={label}
         value={value}
