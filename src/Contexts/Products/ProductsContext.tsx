@@ -39,7 +39,7 @@ export const ProductsContextProvider = ({ children }: IProductsContextProviderPr
     setFilteredProducts(data);
   }, [data])
 
-  const handleFilter = useCallback((filters: IFilter) => {
+  const handleFilter = (filters: IFilter) => {
     const {
       minPrice,
       maxPrice,
@@ -66,9 +66,9 @@ export const ProductsContextProvider = ({ children }: IProductsContextProviderPr
     }
 
     setFilteredProducts(newProducts);
-  }, [data])
+  }
 
-  const handleSorting = useCallback((sorting: Sorting) => {
+  const handleSorting = (sorting: Sorting) => {
     const sortedProducts = filteredProducts ? [...filteredProducts] : [];;
 
     switch (sorting) {
@@ -88,12 +88,12 @@ export const ProductsContextProvider = ({ children }: IProductsContextProviderPr
     }
     
     setFilteredProducts(sortedProducts);
-  }, [filteredProducts])
+  }
 
-  const handleSearch = useCallback((value: string) => {
+  const handleSearch = (value: string) => {
     const searchProducts = data ? data.filter(product => product.title.toLowerCase().includes(value.toLowerCase())) : [];
     setFilteredProducts(searchProducts);
-  }, [data])
+  }
   
   const contextValue = {
     products: data,

@@ -1,10 +1,10 @@
 import { Box, InputAdornment, SelectChangeEvent, Stack } from '@mui/material';
-import React, { ChangeEvent, useContext, useEffect, useState, useTransition } from 'react'
+import React, { ChangeEvent, useContext, useEffect, useState } from 'react'
 import { TextField } from './Inputs/TextField'
 import SearchIcon from '@mui/icons-material/Search';
 import { Select } from './Inputs/Select';
-import { Sorting } from '../../../interfaces/Sorting';
-import { ProductsContext } from '../../../Contexts/Products/ProductsContext';
+import { Sorting } from '../../interfaces/Sorting';
+import { ProductsContext } from '../../Contexts/Products/ProductsContext';
 
 export const SearchAndSort = () => {
   const [search, setSearch] = useState<string>("");

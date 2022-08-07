@@ -1,9 +1,10 @@
 import { Box, Button, SelectChangeEvent, Typography } from '@mui/material'
 import React, { ChangeEvent, SyntheticEvent, useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { ProductsContext } from '../../../Contexts/Products/ProductsContext';
-import { IFilter } from '../../../interfaces/Filter';
+import { ProductsContext } from '../../Contexts/Products/ProductsContext';
+import { useBreakPoint } from '../../hooks/useBreakPoint';
+import { IFilter } from '../../interfaces/Filter';
 import { DatePicker } from './Inputs/DatePicker';
-import { TextField } from './Inputs/TextField';
+import { FinancialTextField, TextField } from './Inputs/TextField';
 
 export const Filter = () => {
   const [minPrice, setMinPrice] = useState<string>("");
@@ -11,6 +12,7 @@ export const Filter = () => {
   const [minCreationDate, setMinCreationDate] = useState<Date | null>(null);
   const [maxCreationDate, setMaxCreationDate] = useState<Date | null>(null);  
   const productsContext = useContext(ProductsContext);
+  const { mdSize } = useBreakPoint();
 
   const handleFilterSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
@@ -42,17 +44,18 @@ export const Filter = () => {
   }
  
   return (
-    <Box component='aside' sx={{ height: '50rem', flex: '15rem', flexShrink: 0, flexGrow: 0, pt: 10 }}>
+    <Box component={mdSize ? 'aside' : 'div'} sx={{ flex: '15rem', flexShrink: 0, flexGrow: 0, pt: { xs: 0, md: 10 } }}>
       <Box component='form' noValidate onSubmit={handleFilterSubmit}>
-         <Box>        
+          <Typography fontWeight={600} fontSize={10} sx={{ color: '#777777' }}>FILTRAR</Typography>
+         <Box sx={{ mt: 4 }}>
          <Typography fontWeight={500}>Preço</Typography>
-          <TextField
+          <FinancialTextField
             label='Mínimo'
             id="min"
             value={minPrice}
             onChange={handleMinPriceChange}
           />
-          <TextField
+          <FinancialTextField
             label='Máximo'
             id="max"
             value={maxPrice}
@@ -73,7 +76,7 @@ export const Filter = () => {
           />
         </Box>
         <Box sx={{ mt: 4 }}>
-          <Button fullWidth variant='outlined' type='submit' >Filtrar</Button>
+          <Button fullWidth variant='contained' type='submit' >Filtrar</Button>
         </Box>
       </Box>
     </Box>

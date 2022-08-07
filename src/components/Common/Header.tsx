@@ -8,12 +8,8 @@ import { Badge, Stack } from '@mui/material';
 import { CartContext } from '../../Contexts/Cart/CartContext';
 import { Link } from 'react-router-dom';
 
-interface IHeaderProps {
-  handleOpenCart: () => void;
-}
-
-export const Header = ({ handleOpenCart }: IHeaderProps) => {
-  const context = useContext(CartContext);
+export const Header = () => {
+  const cartContext = useContext(CartContext);
 
   return (
     <AppBar position="static">
@@ -24,8 +20,8 @@ export const Header = ({ handleOpenCart }: IHeaderProps) => {
               Fake Shop
             </Typography>
           </Link>
-          <IconButton color='inherit' onClick={handleOpenCart}>
-            <Badge badgeContent={context.cart.length} color="secondary">
+          <IconButton color='inherit' onClick={cartContext.handleOpenCart}>
+            <Badge badgeContent={cartContext.totalItems} color="secondary">
               <ShoppingCartIcon />
             </Badge>
           </IconButton>

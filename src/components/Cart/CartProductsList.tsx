@@ -15,7 +15,7 @@ export const CartProductsList = (props: ICartProductsListProps) => {
 
   return (
     <Box sx={{ height: '100%', my: 5, overflowY: 'auto' }}>
-      {cartContext.cart.length > 0 &&
+      {!cartContext.isEmpty &&
         <>
           <List sx={{ width: '100%' }}>
             {cartContext.cart.map(cartItem => {
@@ -34,7 +34,7 @@ export const CartProductsList = (props: ICartProductsListProps) => {
           </Stack>
         </>
       }
-      {cartContext.cart.length === 0 && <EmptyCartCard />}
+      {cartContext.isEmpty && <EmptyCartCard />}
     </Box>
   )
 }

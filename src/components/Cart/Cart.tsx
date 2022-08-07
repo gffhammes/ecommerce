@@ -6,34 +6,29 @@ import { Link } from 'react-router-dom';
 import { CartContext } from '../../Contexts/Cart/CartContext';
 import CloseIcon from '@mui/icons-material/Close';
 
-interface ICartProps {
-  open: boolean;
-  onClose: () => void;
-  onOpen: () => void;
-}
 
-export const Cart = ({ open, onClose, onOpen }: ICartProps) => {
+export const Cart = () => {
   const cartContext = useContext(CartContext);
 
   return (
     <SwipeableDrawer
       anchor={'right'}
-      open={open}
-      onClose={onClose}
-      onOpen={onOpen}
+      open={cartContext.open}
+      onClose={cartContext.handleCloseCart}
+      onOpen={cartContext.handleOpenCart}
     >
       <Box sx={{ height: '100%', p: 5, width: 'min(100vw, 25rem)', display: 'flex', flexDirection: 'column' }}>
         <Stack direction='row' justifyContent='space-between' alignItems='center'>          
           <Typography color='primary.main' textAlign='center' fontWeight={600}>CARRINHO</Typography>
 
-          <IconButton size='small' color='primary' onClick={onClose}>
+          <IconButton size='small' color='primary' onClick={cartContext.handleCloseCart}>
             <CloseIcon />
           </IconButton>
         </Stack>
 
         <CartProductsList />
 
-        <Button disabled={cartContext.cart.length === 0} component={Link} to='/checkout' onClick={onClose} variant='contained' sx={{ mt: 'auto' }} endIcon={<ArrowRightAltIcon />} >Checkout</Button>
+        <Button disabled={cartContext.isEmpty} component={Link} to='/checkout' onClick={cartContext.handleCloseCart} variant='contained' sx={{ mt: 'auto' }} endIcon={<ArrowRightAltIcon />} >Checkout</Button>
       </Box>
     </SwipeableDrawer>
   )
