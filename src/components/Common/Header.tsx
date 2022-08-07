@@ -7,6 +7,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Badge, Stack } from '@mui/material';
 import { CartContext } from '../../Contexts/Cart/CartContext';
 import { Link } from 'react-router-dom';
+import { WhiteLogo } from './WhiteLogo';
 
 export const Header = () => {
   const cartContext = useContext(CartContext);
@@ -14,11 +15,9 @@ export const Header = () => {
   return (
     <AppBar position="static">
       <Toolbar sx={{ width: '100%' }}>
-        <Stack direction='row' justifyContent='space-between' alignItems='center' sx={{ width: '100%' }} >          
+        <Stack direction='row' justifyContent='space-between' alignItems='center' sx={{ width: '100%' }} >    
           <Link to='/'>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Fake Shop
-            </Typography>
+            <WhiteLogo />
           </Link>
           <IconButton color='inherit' onClick={cartContext.handleOpenCart}>
             <Badge badgeContent={cartContext.totalItems} color="secondary">
