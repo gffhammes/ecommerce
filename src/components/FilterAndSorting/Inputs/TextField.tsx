@@ -51,7 +51,6 @@ export const FinancialTextField = (props: TextFieldProps) => {
 	)
 }
 
-
 export const TextField = (props: TextFieldProps) => {
   return (
     <MuiTextField 

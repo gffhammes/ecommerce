@@ -4,7 +4,7 @@ import { Filter } from './Filter'
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 
 const sxFilterWrapper: SxProps<Theme> = {
-  backgroundColor: '#d1d1d1',
+  backgroundColor: '#dadada',
   height: 'fit-content',
   width: '100%',
   display: 'flex',

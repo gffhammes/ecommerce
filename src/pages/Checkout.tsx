@@ -1,4 +1,4 @@
-import { Box, Container, Stack, Typography } from '@mui/material'
+import { Container, Stack, Typography } from '@mui/material'
 import React from 'react'
 import { CheckoutList } from '../components/Checkout/CheckoutList';
 

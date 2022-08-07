@@ -14,14 +14,14 @@ export const ProductsList = (props: IProductsListProps) => {
     return <div>loading...</div>
   }
   
-  if (!productsContext.filteredProducts || productsContext.filteredProducts.length === 0) {
+  if (!productsContext.filteredAndSortedProducts || productsContext.filteredAndSortedProducts.length === 0) {
     return <NoProduct />
   }
 
   return (
     <Box sx={{ pt: 2 }}>      
       <Grid container spacing={2}>
-        {productsContext.filteredProducts.map(product => (
+        {productsContext.filteredAndSortedProducts.map(product => (
           <Grid key={product.id} item xs={12} sm={6} lg={4}>          
             <ProductCard product={product} />
           </Grid>

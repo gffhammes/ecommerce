@@ -23,7 +23,7 @@ export const CheckoutList = () => {
             </Stack>
         }
       </Paper>
-      <Stack direction='row' justifyContent='flex-end' alignItems='center' spacing={4}>
+      <Stack direction='row' justifyContent={{ xs: 'space-between', sm: 'flex-end' }} alignItems='center' spacing={4}>
         <Typography variant="h5">R$ {cartContext.totalPrice.toFixed(2)}</Typography>
         <Button disabled={cartContext.isEmpty} variant='contained' onClick={handleCheckout}>Finalizar compra</Button>
       </Stack>

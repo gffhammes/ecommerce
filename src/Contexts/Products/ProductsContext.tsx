@@ -4,6 +4,7 @@ import { useFetch } from "../../hooks/useFetch";
 import { IFilter } from "../../interfaces/Filter";
 import { CreationDateSorting, PriceSorting, Sorting } from "../../interfaces/Sorting";
 import { IFiltersAndSorting } from "../../interfaces/FiltersAndSorting";
+import { getFilteredAndSortedProducts } from "../../helpers/getFilteredAndSortedProducts";
 
 interface IProductsContextProviderProps {
   children: ReactNode;
@@ -24,7 +25,7 @@ interface IProductsContext {
   isFetching: boolean;
   error: Error | null;
   filtersAndSorting: IFiltersAndSorting;
-  filteredProducts: IProduct[] | null;
+  filteredAndSortedProducts: IProduct[] | null;
   handleFilter: (filters: IFilter) => void;
   handleCreationDateSortingChange: (newValue: CreationDateSorting) => void; 
   handlePriceSortingChange: (newValue: PriceSorting) => void; 
@@ -36,7 +37,7 @@ export const defaultProductsContext = {
   isFetching: true,
   error: null,
   filtersAndSorting: filtersAndSortingInitialState,
-  filteredProducts: null,
+  filteredAndSortedProducts: null,
   handleFilter: () => {},
   handleCreationDateSortingChange: () => {},
   handlePriceSortingChange: () => {},
@@ -49,63 +50,8 @@ export const ProductsContextProvider = ({ children }: IProductsContextProviderPr
   const { data, isFetching, error } = useFetch<IProduct[]>("/products");
   const [filtersAndSorting, setFiltersAndSorting] = useState<IFiltersAndSorting>(filtersAndSortingInitialState);
 
-  const filteredProducts = useMemo(() => {
-    const {
-      minPrice,
-      maxPrice,
-      minCreationDate,
-      maxCreationDate,
-      search,
-      creationDateSorting,
-      priceSorting,
-    } = filtersAndSorting;
-
-    let newProducts = data ? [...data] : [];
-
-    if (minPrice) {
-      newProducts = newProducts.filter(product => product.price >= parseInt(minPrice));
-    }
-    
-    if (maxPrice) {
-      newProducts = newProducts.filter(product => product.price <= parseInt(maxPrice));
-    }
-    
-    if (minCreationDate) {
-      newProducts = newProducts.filter(product => new Date(product.createdAt) >= minCreationDate);
-    }
-    
-    if (maxCreationDate) {
-      newProducts = newProducts.filter(product => new Date(product.createdAt) <= maxCreationDate);
-    }
-
-    const searchedProducts = newProducts.filter(product => product.title.toLowerCase().includes(search.toLowerCase()));
-
-    const priceSortingFunction = (priceA: number, priceB: number) => {
-      if (priceSorting === PriceSorting.CHEAPER) {
-        return priceA - priceB;
-      } else if (priceSorting === PriceSorting.MORE_EXPENSIVE) {
-        return priceB - priceA;
-      }
-
-      return 0;
-    }
-    
-    const creationDateSortingFunction = (dateA: Date, dateB: Date) => {
-      if (creationDateSorting === CreationDateSorting.NEWER) {
-        return Date.parse(dateB.toString()) - Date.parse(dateA.toString());
-      } else if (creationDateSorting === CreationDateSorting.OLDER) {
-        return Date.parse(dateA.toString()) - Date.parse(dateB.toString());
-      }
-
-      return 0;
-    }
-
-    const sortedProducts = searchedProducts.sort((productA, productB) => (
-      priceSortingFunction(productA.price, productB.price)
-      || creationDateSortingFunction(productA.createdAt, productB.createdAt)
-    ))
-
-    return sortedProducts;
+  const filteredAndSortedProducts = useMemo(() => {
+    return getFilteredAndSortedProducts(filtersAndSorting, data);
   }, [data, filtersAndSorting])
 
   const handleFilter = (filters: IFilter) => {
@@ -141,7 +87,7 @@ export const ProductsContextProvider = ({ children }: IProductsContextProviderPr
     isFetching,
     error,
     filtersAndSorting,
-    filteredProducts,
+    filteredAndSortedProducts,
     handleFilter,
     handleSearch,
     handleCreationDateSortingChange,
