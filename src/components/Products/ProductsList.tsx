@@ -40,7 +40,7 @@ export const ProductsList = (props: IProductsListProps) => {
   }
 
   return (
-    <Box>      
+    <Box sx={{ pt: 2 }}>      
       <Grid container spacing={2}>
         {productsContext.filteredProducts.map(product => (
           <Grid key={product.id} item xs={12} sm={6} lg={4}>          

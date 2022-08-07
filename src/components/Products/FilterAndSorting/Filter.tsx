@@ -42,10 +42,9 @@ export const Filter = () => {
   }
  
   return (
-    <Box component='aside' sx={{ height: '50rem', flex: '15rem', flexShrink: 0, flexGrow: 0, pt: 4 }}>
-      <Typography fontSize={12} sx={{ color: '#adadad' }}>FILTRAR</Typography>
+    <Box component='aside' sx={{ height: '50rem', flex: '15rem', flexShrink: 0, flexGrow: 0, pt: 10 }}>
       <Box component='form' noValidate onSubmit={handleFilterSubmit}>
-         <Box sx={{ mt: 4 }}>        
+         <Box>        
          <Typography fontWeight={500}>Preço</Typography>
           <TextField
             label='Mínimo'

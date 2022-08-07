@@ -24,9 +24,9 @@ export const Cart = ({ open, onClose, onOpen }: ICartProps) => {
     >
       <Box sx={{ height: '100%', p: 5, width: 'min(100vw, 25rem)', display: 'flex', flexDirection: 'column' }}>
         <Stack direction='row' justifyContent='space-between' alignItems='center'>          
-          <Typography color='primary.main' fontSize={12} textAlign='center' fontWeight={600}>CARRINHO</Typography>
+          <Typography color='primary.main' textAlign='center' fontWeight={600}>CARRINHO</Typography>
 
-          <IconButton size='small' onClick={onClose}>
+          <IconButton size='small' color='primary' onClick={onClose}>
             <CloseIcon />
           </IconButton>
         </Stack>

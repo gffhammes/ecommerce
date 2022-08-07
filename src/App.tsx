@@ -24,9 +24,9 @@ function App() {
     <ProductsContextProvider>      
       <CartContextProvider>
         <>      
-          <Stack sx={{ height: '100%', backgroundColor: '#ededed', overflowY: 'scroll' }}>
+          <Stack sx={{ height: '100%', backgroundColor: '#ededed', overflowY: 'auto' }}>
             <Header handleOpenCart={handleOpenCart} />
-            <Box sx={{ py: 10 }}>        
+            <Box sx={{ py: { xs: 5, md: 10 } }}>        
               <RoutesComponent />
             </Box>
           </Stack>
