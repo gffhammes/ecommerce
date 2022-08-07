@@ -24,3 +24,6 @@ a {
   text-decoration: none;
 }
 
+.PrivateSwipeArea-root {
+  z-index: -100 !important;
+}

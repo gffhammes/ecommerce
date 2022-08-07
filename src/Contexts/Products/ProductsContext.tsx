@@ -26,7 +26,8 @@ interface IProductsContext {
   filtersAndSorting: IFiltersAndSorting;
   filteredProducts: IProduct[] | null;
   handleFilter: (filters: IFilter) => void;
-  handleSorting: (sorting: Sorting) => void;
+  handleCreationDateSortingChange: (newValue: CreationDateSorting) => void; 
+  handlePriceSortingChange: (newValue: PriceSorting) => void; 
   handleSearch: (value: string) => void;
 }
 
@@ -37,7 +38,8 @@ export const defaultProductsContext = {
   filtersAndSorting: filtersAndSortingInitialState,
   filteredProducts: null,
   handleFilter: () => {},
-  handleSorting: () => {},
+  handleCreationDateSortingChange: () => {},
+  handlePriceSortingChange: () => {},
   handleSearch: () => {},
 }
 
@@ -54,6 +56,8 @@ export const ProductsContextProvider = ({ children }: IProductsContextProviderPr
       minCreationDate,
       maxCreationDate,
       search,
+      creationDateSorting,
+      priceSorting,
     } = filtersAndSorting;
 
     let newProducts = data ? [...data] : [];
@@ -74,45 +78,62 @@ export const ProductsContextProvider = ({ children }: IProductsContextProviderPr
       newProducts = newProducts.filter(product => new Date(product.createdAt) <= maxCreationDate);
     }
 
-    const searchProducts = newProducts.filter(product => product.title.toLowerCase().includes(search.toLowerCase()));
+    const searchedProducts = newProducts.filter(product => product.title.toLowerCase().includes(search.toLowerCase()));
 
-    return searchProducts;
+    const priceSortingFunction = (priceA: number, priceB: number) => {
+      if (priceSorting === PriceSorting.CHEAPER) {
+        return priceA - priceB;
+      } else if (priceSorting === PriceSorting.MORE_EXPENSIVE) {
+        return priceB - priceA;
+      }
+
+      return 0;
+    }
+    
+    const creationDateSortingFunction = (dateA: Date, dateB: Date) => {
+      if (creationDateSorting === CreationDateSorting.NEWER) {
+        return Date.parse(dateB.toString()) - Date.parse(dateA.toString());
+      } else if (creationDateSorting === CreationDateSorting.OLDER) {
+        return Date.parse(dateA.toString()) - Date.parse(dateB.toString());
+      }
+
+      return 0;
+    }
+
+    const sortedProducts = searchedProducts.sort((productA, productB) => (
+      priceSortingFunction(productA.price, productB.price)
+      || creationDateSortingFunction(productA.createdAt, productB.createdAt)
+    ))
+
+    return sortedProducts;
   }, [data, filtersAndSorting])
 
   const handleFilter = (filters: IFilter) => {
     setFiltersAndSorting(filtersAndSorting => ({
       ...filtersAndSorting,
       ...filters
-    }))
+    }));
   }
-
-  const handleSorting = (sorting: Sorting) => {
-    const sortedProducts = filteredProducts ? [...filteredProducts] : [];;
-
-    switch (sorting) {
-      case Sorting.CHEAPER:
-        sortedProducts.sort((productA, productB) => productA.price - productB.price);
-        break;
-      case Sorting.MORE_EXPENSIVE:
-        sortedProducts.sort((productA, productB) => productB.price - productA.price);
-        break;
-      case Sorting.OLDER:
-        sortedProducts.sort((productA, productB) => Number(new Date(productA.createdAt)) - Number(new Date(productB.createdAt)));
-        break;
-      case Sorting.NEWER:
-        sortedProducts.sort((productA, productB) => Number(new Date(productB.createdAt)) - Number(new Date(productA.createdAt)));
-        break;
-      default: 
-    }
-    
-    // setFilteredProducts(sortedProducts);
-  }
-
+  
   const handleSearch = (value: string) => {
     setFiltersAndSorting(filtersAndSorting => ({
       ...filtersAndSorting,
       search: value,
-    }))
+    }));
+  }
+
+  const handleCreationDateSortingChange = (newValue: CreationDateSorting) => {
+    setFiltersAndSorting(filtersAndSorting => ({
+      ...filtersAndSorting,
+      creationDateSorting: newValue,
+    }));
+  }
+  
+  const handlePriceSortingChange = (newValue: PriceSorting) => {
+    setFiltersAndSorting(filtersAndSorting => ({
+      ...filtersAndSorting,
+      priceSorting: newValue,
+    }));
   }
   
   const contextValue = {
@@ -122,8 +143,9 @@ export const ProductsContextProvider = ({ children }: IProductsContextProviderPr
     filtersAndSorting,
     filteredProducts,
     handleFilter,
-    handleSorting,
     handleSearch,
+    handleCreationDateSortingChange,
+    handlePriceSortingChange,
   };
 
   return <ProductsContext.Provider value={contextValue}>{children}</ProductsContext.Provider>;

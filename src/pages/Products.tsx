@@ -2,7 +2,7 @@ import { Button, Container, Stack } from '@mui/material'
 import React, { useState } from 'react'
 import { Filter } from '../components/FilterAndSorting/Filter'
 import { MobileFilterCollapse } from '../components/FilterAndSorting/MobileFilterCollapse'
-import { SearchAndSort } from '../components/FilterAndSorting/SearchAndSort'
+import { SearchAndSort } from '../components/FilterAndSorting/SearchAndSort/SearchAndSort'
 import { ProductsList } from '../components/Products/ProductsList'
 import { useBreakPoint } from '../hooks/useBreakPoint'
 
