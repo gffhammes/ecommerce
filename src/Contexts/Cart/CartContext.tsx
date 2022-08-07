@@ -69,7 +69,7 @@ export const CartContextProvider = ({ children }: ICartContextProviderProps) => 
     setCart(newCart);
     
     let stringCart = JSON.stringify(newCart);
-    localStorage.setItem("cart", stringCart)
+    localStorage.setItem("cart", stringCart);
   }
 
   const removeProductFromCart = (productId: number) => {
@@ -77,14 +77,14 @@ export const CartContextProvider = ({ children }: ICartContextProviderProps) => 
 
     setCart(newCart);
     
-    let cartString = JSON.stringify(newCart)
-    localStorage.setItem('cart', cartString)
+    let cartString = JSON.stringify(newCart);
+    localStorage.setItem('cart', cartString);
   }
 
   const clearCart = () => {
     setCart([]);
 
-    localStorage.setItem('cart', "[]")
+    localStorage.setItem('cart', "[]");
   }
 
   const totalPrice = cart.reduce((sum, cartItem) => sum + (cartItem.product.price * cartItem.quantity), 0);

@@ -2,15 +2,14 @@ import { Avatar, Box, Divider, IconButton,  ListItem, ListItemAvatar, Stack, Typ
 import React, { useContext } from 'react'
 import DeleteIcon from '@mui/icons-material/Delete';
 import { getTruncate } from '../../helpers/getTruncate';
-import { IProduct } from '../../interfaces/Product';
 import { CartContext } from '../../Contexts/Cart/CartContext';
+import { ICartItem } from '../../interfaces/Cart';
 
-interface ICartProductCardProps {
-  product: IProduct;
-  quantity: number;
+interface IProductListItemProps {
+  cartItem: ICartItem;
 }
 
-export const CartProductCard = ({ product, quantity }: ICartProductCardProps) => {
+export const ProductListItem = ({ cartItem: { product, quantity } }: IProductListItemProps) => {
   const { removeProductFromCart } = useContext(CartContext);
 
   return (

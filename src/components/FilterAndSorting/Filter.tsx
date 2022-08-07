@@ -7,11 +7,11 @@ import { DatePicker } from './Inputs/DatePicker';
 import { FinancialTextField, TextField } from './Inputs/TextField';
 
 export const Filter = () => {
-  const [minPrice, setMinPrice] = useState<string>("");
-  const [maxPrice, setMaxPrice] = useState<string>("");  
-  const [minCreationDate, setMinCreationDate] = useState<Date | null>(null);
-  const [maxCreationDate, setMaxCreationDate] = useState<Date | null>(null);  
-  const productsContext = useContext(ProductsContext);
+  const { filtersAndSorting, ...productsContext } = useContext(ProductsContext);
+  const [minPrice, setMinPrice] = useState<string>(filtersAndSorting.minPrice);
+  const [maxPrice, setMaxPrice] = useState<string>(filtersAndSorting.maxPrice);  
+  const [minCreationDate, setMinCreationDate] = useState<Date | null>(filtersAndSorting.minCreationDate);
+  const [maxCreationDate, setMaxCreationDate] = useState<Date | null>(filtersAndSorting.maxCreationDate);  
   const { mdSize } = useBreakPoint();
 
   const handleFilterSubmit = (e: SyntheticEvent) => {

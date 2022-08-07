@@ -1,17 +1,29 @@
-import { createContext, ReactNode, useCallback, useEffect, useState } from "react";
+import { createContext, ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 import { IProduct } from "../../interfaces/Product";
 import { useFetch } from "../../hooks/useFetch";
 import { IFilter } from "../../interfaces/Filter";
-import { Sorting } from "../../interfaces/Sorting";
+import { CreationDateSorting, PriceSorting, Sorting } from "../../interfaces/Sorting";
+import { IFiltersAndSorting } from "../../interfaces/FiltersAndSorting";
 
 interface IProductsContextProviderProps {
   children: ReactNode;
+}
+
+const filtersAndSortingInitialState: IFiltersAndSorting = {
+  minPrice: "",
+  maxPrice: "",
+  minCreationDate: null,
+  maxCreationDate: null,
+  search: "",
+  creationDateSorting: CreationDateSorting.NO_SORTING,
+  priceSorting: PriceSorting.NO_SORTING,
 }
 
 interface IProductsContext {
   products: IProduct[] | null;
   isFetching: boolean;
   error: Error | null;
+  filtersAndSorting: IFiltersAndSorting;
   filteredProducts: IProduct[] | null;
   handleFilter: (filters: IFilter) => void;
   handleSorting: (sorting: Sorting) => void;
@@ -22,6 +34,7 @@ export const defaultProductsContext = {
   products: null,
   isFetching: true,
   error: null,
+  filtersAndSorting: filtersAndSortingInitialState,
   filteredProducts: null,
   handleFilter: () => {},
   handleSorting: () => {},
@@ -32,20 +45,16 @@ export const ProductsContext = createContext<IProductsContext>(defaultProductsCo
 
 export const ProductsContextProvider = ({ children }: IProductsContextProviderProps) => {
   const { data, isFetching, error } = useFetch<IProduct[]>("/products");
-  const [filteredProducts, setFilteredProducts] = useState<IProduct[] | null>(null);
+  const [filtersAndSorting, setFiltersAndSorting] = useState<IFiltersAndSorting>(filtersAndSortingInitialState);
 
-  useEffect(() => {
-    if (!data) return;
-    setFilteredProducts(data);
-  }, [data])
-
-  const handleFilter = (filters: IFilter) => {
+  const filteredProducts = useMemo(() => {
     const {
       minPrice,
       maxPrice,
       minCreationDate,
       maxCreationDate,
-    } = filters;
+      search,
+    } = filtersAndSorting;
 
     let newProducts = data ? [...data] : [];
 
@@ -65,7 +74,16 @@ export const ProductsContextProvider = ({ children }: IProductsContextProviderPr
       newProducts = newProducts.filter(product => new Date(product.createdAt) <= maxCreationDate);
     }
 
-    setFilteredProducts(newProducts);
+    const searchProducts = newProducts.filter(product => product.title.toLowerCase().includes(search.toLowerCase()));
+
+    return searchProducts;
+  }, [data, filtersAndSorting])
+
+  const handleFilter = (filters: IFilter) => {
+    setFiltersAndSorting(filtersAndSorting => ({
+      ...filtersAndSorting,
+      ...filters
+    }))
   }
 
   const handleSorting = (sorting: Sorting) => {
@@ -87,18 +105,21 @@ export const ProductsContextProvider = ({ children }: IProductsContextProviderPr
       default: 
     }
     
-    setFilteredProducts(sortedProducts);
+    // setFilteredProducts(sortedProducts);
   }
 
   const handleSearch = (value: string) => {
-    const searchProducts = data ? data.filter(product => product.title.toLowerCase().includes(value.toLowerCase())) : [];
-    setFilteredProducts(searchProducts);
+    setFiltersAndSorting(filtersAndSorting => ({
+      ...filtersAndSorting,
+      search: value,
+    }))
   }
   
   const contextValue = {
     products: data,
     isFetching,
     error,
+    filtersAndSorting,
     filteredProducts,
     handleFilter,
     handleSorting,
