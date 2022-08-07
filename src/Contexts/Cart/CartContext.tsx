@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useEffect, useState } from "react";
 import { ICartItem } from "../../interfaces/Cart";
 import { IProduct } from "../../interfaces/Product";
 
@@ -37,6 +37,12 @@ export const CartContext = createContext<ICartContext>(defaultCartContext);
 export const CartContextProvider = ({ children }: ICartContextProviderProps) => {
   const [cart, setCart] = useState<ICartItem[]>([]);
   const [open, setOpen] = useState<boolean>(false);
+  
+  const localCart = localStorage.getItem("cart");
+
+  useEffect(() => {
+    if (localCart) setCart(JSON.parse(localCart))    
+  }, [])
 
   const handleOpenCart = () => {
     setOpen(true);
@@ -61,12 +67,18 @@ export const CartContextProvider = ({ children }: ICartContextProviderProps) => 
     }
     
     setCart(newCart);
+    
+    let stringCart = JSON.stringify(newCart);
+    localStorage.setItem("cart", stringCart)
   }
 
   const removeProductFromCart = (productId: number) => {
     const newCart = cart.filter((item) => item.product.id !== productId);
 
     setCart(newCart);
+    
+    let cartString = JSON.stringify(newCart)
+    localStorage.setItem('cart', cartString)
   }
 
   const clearCart = () => {
