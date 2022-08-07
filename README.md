@@ -3,6 +3,28 @@
 # Fake Shop
 ## Este é um projeto de sistema de ecommerce simplificado desenvolvido com React e Typescript. Conta com produtos, filtros, carrinho salvo em cachê e tela de checkout.
 
+### Pré-requisitos
+
+Antes de começar, você vai precisar ter instalado em sua máquina as seguintes ferramentas:
+[Git](https://git-scm.com), [Node.js](https://nodejs.org/en/) e [Yarn](https://yarnpkg.com/).
+
+### 🖥 Rodando a Aplicação (front-end)
+
+```bash
+# Clone este repositório
+$ git clone <https://github.com/tgmarinho/nlw1>
+
+# Acesse a pasta do projeto no terminal/cmd
+$ cd ecommerce
+
+# Instale as dependências
+$ yarn
+
+# Execute a aplicação
+$ yarn start
+
+# O servidor inciará na porta:3000 - acesse <http://localhost:3000>
+```
 
 ### 🛠 Tecnologias
 
