@@ -1,7 +1,7 @@
 ![image](https://user-images.githubusercontent.com/81267675/183313605-7edfb0c6-e611-4d5a-ab71-02971ef9276f.png)
 
 # Fake Shop
-## Este é um projeto de sistema de ecommerce simplificado desenvolvido com React e Typescript. Conta com produtos, filtros, carrinho e tela de checkout.
+## Este é um projeto de sistema de ecommerce simplificado desenvolvido com React e Typescript. Conta com produtos, filtros, carrinho salvo em cachê e tela de checkout.
 
 
 ### 🛠 Tecnologias
@@ -14,7 +14,6 @@ As seguintes ferramentas foram usadas na construção do projeto:
 
 
 ### Autor
----
 
 <a href="https://guilhermehammes.com.br">
  <img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/81267675?v=4" width="100px;" alt="Guilherme Hammes"/>
