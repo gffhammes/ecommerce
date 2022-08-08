@@ -9,17 +9,19 @@ interface ICartContextProviderProps {
 }
 
 interface ICartContext {
-   cart: ICartItem[];
-   totalPrice: number;
-   totalItems: number;
-   open: boolean;
-   isEmpty: boolean;
-   addProductToCart: (product: IProduct) => void;
-   removeProductFromCart: (productId: number) => void;
-   clearCart: () => void;
-   handleOpenCart: () => void;
-   handleCloseCart: () => void;
-   handleCheckout: () => void;
+  cart: ICartItem[];
+  totalPrice: number;
+  totalItems: number;
+  open: boolean;
+  isEmpty: boolean;
+  addProductToCart: (product: IProduct) => void;
+  removeProductFromCart: (productId: number) => void;
+  addOneUnity: (productId: number) => void;
+  removeOneUnity: (productId: number) => void;
+  clearCart: () => void;
+  handleOpenCart: () => void;
+  handleCloseCart: () => void;
+  handleCheckout: () => void;
 }
 
 export const defaultCartContext = {
@@ -30,6 +32,8 @@ export const defaultCartContext = {
   isEmpty: true,
   addProductToCart: () => {},
   removeProductFromCart: () => {},
+  addOneUnity: () => {},
+  removeOneUnity: () => {},
   clearCart: () => {},
   handleOpenCart: () => {},
   handleCloseCart: () => {},
@@ -43,12 +47,16 @@ export const CartContextProvider = ({ children }: ICartContextProviderProps) => 
   const [open, setOpen] = useState<boolean>(false);
   const { enqueueSnackbar } = useSnackbar()
   
-
   useEffect(() => {
     const localCart = localStorage.getItem("cart");
 
     if (localCart) setCart(JSON.parse(localCart))    
-  }, [])
+  }, []);
+
+  const setLocalCart = (newCart: ICartItem[]) => {
+    let stringCart = JSON.stringify(newCart);
+    localStorage.setItem("cart", stringCart);
+  }
 
   const handleOpenCart = () => {
     setOpen(true);
@@ -74,8 +82,7 @@ export const CartContextProvider = ({ children }: ICartContextProviderProps) => 
     
     setCart(newCart);
     
-    let stringCart = JSON.stringify(newCart);
-    localStorage.setItem("cart", stringCart);
+    setLocalCart(newCart);
 
     enqueueSnackbar('Produto adicionado ao carrinho!');
   }
@@ -85,14 +92,47 @@ export const CartContextProvider = ({ children }: ICartContextProviderProps) => 
 
     setCart(newCart);
     
-    let cartString = JSON.stringify(newCart);
-    localStorage.setItem('cart', cartString);
+    setLocalCart(newCart);
+  }
+
+  const addOneUnity = (productId: number) => {
+    const newCart = cart.map(cartItem => {
+      if (cartItem.product.id === productId) {
+
+        return {
+          ...cartItem,
+          quantity: cartItem.quantity + 1,
+        };
+      }
+
+      return cartItem;
+    })
+
+    setCart(newCart);
+    setLocalCart(newCart);
+  }
+  
+  const removeOneUnity = (productId: number) => {
+    const newCart = cart.map(cartItem => {
+      if (cartItem.product.id === productId) {
+
+        return {
+          ...cartItem,
+          quantity: cartItem.quantity - 1,
+        };
+      }
+
+      return cartItem;
+    }).filter(cartItem => cartItem.quantity > 0)
+
+    setCart(newCart);
+    setLocalCart(newCart);
   }
 
   const clearCart = () => {
     setCart([]);
 
-    localStorage.setItem('cart', "[]");
+    setLocalCart([]);
   }
 
   const handleCheckout = () => {
@@ -115,6 +155,8 @@ export const CartContextProvider = ({ children }: ICartContextProviderProps) => 
     isEmpty,
     addProductToCart,
     removeProductFromCart,
+    addOneUnity,
+    removeOneUnity,
     clearCart,
     handleOpenCart,
     handleCloseCart,

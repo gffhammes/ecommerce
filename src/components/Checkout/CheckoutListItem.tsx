@@ -1,10 +1,9 @@
-import { Box, Divider, Grid, IconButton, ListItem, Stack, SxProps, Theme, Typography } from '@mui/material'
-import React, { useContext } from 'react'
-import DeleteIcon from '@mui/icons-material/Delete';
+import { Box, Divider, Grid, ListItem, Stack, SxProps, Theme, Typography } from '@mui/material'
+import React from 'react'
 import { ICartItem } from '../../interfaces/Cart';
-import { CartContext } from '../../Contexts/Cart/CartContext';
 import { getTruncate } from '../../helpers/getTruncate';
 import { currencyBRLIntl } from '../../helpers/currencyBRLIntl';
+import { CartItemButtons } from '../Common/CartItemButtons';
 
 interface ICheckoutListItemProps {
   cartItem: ICartItem;
@@ -18,7 +17,6 @@ const sxImage: SxProps<Theme> = {
 }
 
 export const CheckoutListItem = ({ cartItem }: ICheckoutListItemProps) => {
-  const cartContext = useContext(CartContext);
 
   return (
     <>    
@@ -43,9 +41,7 @@ export const CheckoutListItem = ({ cartItem }: ICheckoutListItemProps) => {
             </Stack>
           </Grid>
           <Grid item xs={2} sm={1}>
-            <IconButton sx={{ height: 'fit-content', flexBasis: 'fit-content', flexGrow: 0 }} onClick={() => cartContext.removeProductFromCart(cartItem.product.id)}>
-                <DeleteIcon />
-            </IconButton>
+            <CartItemButtons productId={cartItem.product.id} />
           </Grid>
         </Grid>
       </ListItem>

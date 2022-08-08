@@ -1,18 +1,15 @@
-import { Avatar, Box, Divider, IconButton,  ListItem, ListItemAvatar, Stack, Typography } from '@mui/material'
-import React, { useContext } from 'react'
-import DeleteIcon from '@mui/icons-material/Delete';
+import { Avatar, Box, Divider,  ListItem, ListItemAvatar, Stack, Typography } from '@mui/material'
+import React from 'react'
 import { getTruncate } from '../../helpers/getTruncate';
-import { CartContext } from '../../Contexts/Cart/CartContext';
 import { ICartItem } from '../../interfaces/Cart';
 import { currencyBRLIntl } from '../../helpers/currencyBRLIntl';
+import { CartItemButtons } from '../Common/CartItemButtons';
 
 interface IProductListItemProps {
   cartItem: ICartItem;
 }
 
 export const ProductListItem = ({ cartItem: { product, quantity } }: IProductListItemProps) => {
-  const { removeProductFromCart } = useContext(CartContext);
-
   return (
     <>
       <ListItem disablePadding>
@@ -28,10 +25,8 @@ export const ProductListItem = ({ cartItem: { product, quantity } }: IProductLis
             <Typography fontSize={14}>{currencyBRLIntl(product.price)} x {quantity}</Typography>
             <Typography fontSize={14} sx={{ mt: 1, color: '#767676' }} fontWeight={600}>{currencyBRLIntl(product.price * quantity)}</Typography>
           </Box>
-          
-          <IconButton sx={{ height: 'fit-content' }} onClick={() => removeProductFromCart(product.id)}>
-            <DeleteIcon />
-          </IconButton>
+
+          <CartItemButtons productId={product.id} />
         </Stack>
       </ListItem>
       <Divider component="li" sx={{ my: 2 }} />
