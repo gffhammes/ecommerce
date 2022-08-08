@@ -2,7 +2,7 @@
   "name": "ecommerce",
   "version": "0.1.0",
   "homepage": "https://gffhammes.github.io/ecommerce",
-  "private": true,
+  "private": false,
   "dependencies": {
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
