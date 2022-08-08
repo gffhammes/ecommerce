@@ -3,9 +3,7 @@ import React, { useContext } from 'react'
 import CloseIcon from '@mui/icons-material/Close';
 import { CartContext } from '../../Contexts/Cart/CartContext';
 
-type Props = {}
-
-export const CartHeader = (props: Props) => {
+export const CartHeader = () => {
   const cartContext = useContext(CartContext);
 
   return (

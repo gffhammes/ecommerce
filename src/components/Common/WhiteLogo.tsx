@@ -1,9 +1,7 @@
 import { Box, Stack, Typography } from '@mui/material'
 import React from 'react'
 
-type Props = {}
-
-export const WhiteLogo = (props: Props) => {
+export const WhiteLogo = () => {
   return (      
     <Stack direction='row' spacing={1} alignItems='center'>     
       <Box

@@ -6,9 +6,7 @@ import { SearchAndSort } from '../components/FilterAndSorting/SearchAndSort/Sear
 import { ProductsList } from '../components/Products/ProductsList'
 import { useBreakPoint } from '../hooks/useBreakPoint'
 
-type Props = {}
-
-const Products = (props: Props) => {
+const Products = () => {
   const { mdSize } = useBreakPoint();
 
   return (

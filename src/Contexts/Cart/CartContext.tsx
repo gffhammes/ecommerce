@@ -43,9 +43,10 @@ export const CartContextProvider = ({ children }: ICartContextProviderProps) => 
   const [open, setOpen] = useState<boolean>(false);
   const { enqueueSnackbar } = useSnackbar()
   
-  const localCart = localStorage.getItem("cart");
 
   useEffect(() => {
+    const localCart = localStorage.getItem("cart");
+
     if (localCart) setCart(JSON.parse(localCart))    
   }, [])
 

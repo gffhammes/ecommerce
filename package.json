@@ -1,7 +1,7 @@
 {
   "name": "ecommerce",
   "version": "0.1.0",
-  "homepage": "https://gffhammes.github.io/ecommerce",
+  "homepage": ".",
   "private": false,
   "dependencies": {
     "@emotion/react": "^11.10.0",
@@ -32,7 +32,7 @@
   },
   "scripts": {
     "predeploy": "yarn run build",
-    "deploy": "gh-pages -d build",
+    "deploy": "gh-pages -d build -b main",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

@@ -2,9 +2,7 @@ import { Container, Stack, Typography } from '@mui/material'
 import React from 'react'
 import { CheckoutList } from '../components/Checkout/CheckoutList';
 
-type Props = {}
-
-export const Checkout = (props: Props) => {
+export const Checkout = () => {
 
   return (
     <Container>
