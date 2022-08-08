@@ -1,8 +1,8 @@
-import { createContext, ReactNode, useCallback, useEffect, useMemo, useState } from "react";
+import { createContext, ReactNode, useMemo, useState } from "react";
 import { IProduct } from "../../interfaces/Product";
 import { useFetch } from "../../hooks/useFetch";
 import { IFilter } from "../../interfaces/Filter";
-import { CreationDateSorting, PriceSorting, Sorting } from "../../interfaces/Sorting";
+import { CreationDateSorting, PriceSorting } from "../../interfaces/Sorting";
 import { IFiltersAndSorting } from "../../interfaces/FiltersAndSorting";
 import { getFilteredAndSortedProducts } from "../../helpers/getFilteredAndSortedProducts";
 
