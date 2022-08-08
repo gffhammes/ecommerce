@@ -26,14 +26,6 @@ yarn start
 # O servidor inciará na porta:3000 - acesse <http://localhost:3000/>
 ```
 
-### Telas
-![image](https://user-images.githubusercontent.com/81267675/183421044-844c4dc9-a0a8-42c1-b9f5-5a7d90f16c92.png)
-![image](https://user-images.githubusercontent.com/81267675/183421060-02a7cf91-5e76-4a6e-bb29-87be7c74a782.png)
-![image](https://user-images.githubusercontent.com/81267675/183421080-ceeedba6-963b-4d2b-952a-4ce9e7859b61.png)
-![image](https://user-images.githubusercontent.com/81267675/183421099-294f980b-e538-4610-a0f7-1bee9327b669.png)
-![image](https://user-images.githubusercontent.com/81267675/183421112-d8499226-b88f-419c-b2fb-b61e28a331f3.png)
-
-
 ### 🛠 Tecnologias
 
 As seguintes ferramentas foram usadas na construção do projeto:
